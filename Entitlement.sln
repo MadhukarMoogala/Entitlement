@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31911.196
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitlement", "Entitlement.csproj", "{FE7CED9B-2842-4707-B5E4-B25FB4675EED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACAD_EntitilementApi", "ACAD_EntitilementApi\ACAD_EntitilementApi.csproj", "{24F3303B-CD3B-42D9-BD6C-1B6DA0956BCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{FE7CED9B-2842-4707-B5E4-B25FB4675EED}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FE7CED9B-2842-4707-B5E4-B25FB4675EED}.Release|x64.ActiveCfg = Release|x64
 		{FE7CED9B-2842-4707-B5E4-B25FB4675EED}.Release|x64.Build.0 = Release|x64
+		{24F3303B-CD3B-42D9-BD6C-1B6DA0956BCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24F3303B-CD3B-42D9-BD6C-1B6DA0956BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24F3303B-CD3B-42D9-BD6C-1B6DA0956BCF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{24F3303B-CD3B-42D9-BD6C-1B6DA0956BCF}.Debug|x64.Build.0 = Debug|Any CPU
+		{24F3303B-CD3B-42D9-BD6C-1B6DA0956BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24F3303B-CD3B-42D9-BD6C-1B6DA0956BCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24F3303B-CD3B-42D9-BD6C-1B6DA0956BCF}.Release|x64.ActiveCfg = Release|Any CPU
+		{24F3303B-CD3B-42D9-BD6C-1B6DA0956BCF}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
