@@ -13,6 +13,10 @@ build
 
 ## To Run
 
+### Dependency
+ 
+ - Minimum  .NET 4.7
+
 ```
 Download Entitlement.exe
 Entitlement.exe <userId> <appId>
