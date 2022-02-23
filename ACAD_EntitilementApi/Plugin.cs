@@ -13,7 +13,15 @@ namespace ACAD_EntitilementApi
 {
     public class Plugin : IExtensionApplication
     {
+        /// <summary>
+        /// This Utility import is necessary to invoke Autodesk Login.
+        /// </summary>
+        /// <returns></returns>
+        [DllImport("AcConnectWebServices.arx", EntryPoint = "AcConnectWebServicesLogin")]
+        public static extern bool AcConnectWebServicesLogin();
 
+        public static Editor Ed => Application.DocumentManager.MdiActiveDocument.Editor;
+            
         public void Initialize()
         {
 
@@ -27,12 +35,10 @@ namespace ACAD_EntitilementApi
         [CommandMethod("CheckEntitleMent")]
         public static async void CheckEntitlement()
         {
-            var doc = Application.DocumentManager.MdiActiveDocument;
-            if (doc == null) return;
-            var ed = doc.Editor;
+
             //App Id is unique Id that gets allotted to your app once it is published on store,
             //the appid can be found from your publisher apps page
-            var pr = ed.GetString("Enter the AppId that your would like check if you are entitled\n");
+            var pr = Ed.GetString("Enter the AppId that your would like check if you are entitled\n");
             if (pr.Status != PromptStatus.OK) return;
 
             string appId = pr.StringResult;
@@ -41,23 +47,18 @@ namespace ACAD_EntitilementApi
             //If ONLINEUSERID is empty or null, user is not logged in to system.
             if (String.IsNullOrEmpty(userId))
             {
-                Extensions.AcConnectWebServicesLogin();
+                AcConnectWebServicesLogin();
             }
-            bool isValid = await ed.IsEntitled(userId, appId);
-            ed.WriteMessage($"Is Valid {isValid}");
+            bool isValid = await IsEntitled(userId, appId);
+            Ed.WriteMessage($"Is Entitled: {isValid}");
 
         }
-    }
-
-    public static class Extensions
-    {
-        [DllImport("AcConnectWebServices.arx", EntryPoint = "AcConnectWebServicesLogin")]
-        public static extern bool AcConnectWebServicesLogin();
-
-        public static async Task<bool> IsEntitled(this Editor ed, string userId, string appId)
+        public static async Task<bool> IsEntitled(string userId, string appId)
         {
 
-            var url = string.Format("https://apps.autodesk.com/webservices/checkentitlement?userid={0}&appid={1}", System.Uri.EscapeUriString(userId), System.Uri.EscapeUriString(appId));           
+            var url = string.Format("https://apps.autodesk.com/webservices/checkentitlement?userid={0}&appid={1}",
+                            Uri.EscapeUriString(userId),
+                            Uri.EscapeUriString(appId));
             using (var httpResponse = await new HttpClient().GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
             {
                 httpResponse.EnsureSuccessStatusCode(); // throws if not 200-299
@@ -73,19 +74,19 @@ namespace ACAD_EntitilementApi
                     }
                     catch (JsonException) // Invalid JSON
                     {
-                        ed.WriteMessage("Invalid JSON.");
+                        Ed.WriteMessage("Invalid JSON.");
                     }
                 }
                 else
                 {
-                    ed.WriteMessage("HTTP Response was invalid and cannot be deserialized");
+                    Ed.WriteMessage("HTTP Response was invalid and cannot be deserialized");
                 }
 
             }
             return false;
         }
-
     }
+
     public class EntitlementResponse
     {
         public string UserId { get; set; }
