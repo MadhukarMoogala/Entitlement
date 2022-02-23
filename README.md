@@ -64,5 +64,12 @@ We need to collect first UserId, this can be checked using Systemvariable `ONLIN
 
  }
 ```
+Full code - https://github.com/MadhukarMoogala/Entitlement/blob/master/ACAD_EntitilementApi/Plugin.cs
+
+## Dependency
+- NET 4.8
+- Newtonsoft.Json v13.0.1
+
+
 
 
