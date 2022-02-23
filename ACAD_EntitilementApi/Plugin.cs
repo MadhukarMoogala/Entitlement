@@ -49,8 +49,17 @@ namespace ACAD_EntitilementApi
             {
                 AcConnectWebServicesLogin();
             }
-            bool isValid = await IsEntitled(userId, appId);
-            Ed.WriteMessage($"Is Entitled: {isValid}");
+            try
+            {
+                bool isValid = await IsEntitled(userId, appId);
+                Ed.WriteMessage($"Is Entitled: {isValid}");
+            }
+            catch (System.Exception ex)
+            {
+                Ed.WriteMessage(ex.Message);
+            }
+           
+            
 
         }
         public static async Task<bool> IsEntitled(string userId, string appId)
@@ -72,15 +81,11 @@ namespace ACAD_EntitilementApi
                         EntitlementResponse entitlementResponse = JsonConvert.DeserializeObject<EntitlementResponse>(content);
                         return entitlementResponse.IsValid;
                     }
-                    catch (JsonException) // Invalid JSON
+                    catch (JsonException ex) // Invalid JSON
                     {
-                        Ed.WriteMessage("Invalid JSON.");
+                        throw ex;
                     }
-                }
-                else
-                {
-                    Ed.WriteMessage("HTTP Response was invalid and cannot be deserialized");
-                }
+                }               
 
             }
             return false;
